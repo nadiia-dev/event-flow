@@ -1,1 +1,25 @@
-{"events":[{"title":"1111","image":"https://unsplash.com/photos/people-partying-with-confetti-ZODcBkEohk8","date":"2025-03-11","description":"1","id":"d35fc92c-e1fc-4dc4-b7ec-caa8b519aa52"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}],"users":[{"email":"nadiia@ukr.net","password":"$2b$12$kcE5DDd/6CMx7AnMekW4suILB1.lel2aqOj5mYfmchc9xjndwfT0W","id":"4d8ae3ea-e1ee-401c-bea4-9a6a2fea939b"}]}
+{
+  "events": [
+    {
+      "title": "1111",
+      "image": "https://unsplash.com/photos/people-partying-with-confetti-ZODcBkEohk8",
+      "date": "2025-03-11",
+      "description": "1",
+      "id": "d35fc92c-e1fc-4dc4-b7ec-caa8b519aa52"
+    },
+    {
+      "id": "e1",
+      "title": "A dummy event",
+      "date": "2023-02-22",
+      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
+      "description": "Join this amazing event and connect with fellow developers."
+    }
+  ],
+  "users": [
+    {
+      "email": "nadiia@ukr.net",
+      "password": "$2b$12$kcE5DDd/6CMx7AnMekW4suILB1.lel2aqOj5mYfmchc9xjndwfT0W",
+      "id": "4d8ae3ea-e1ee-401c-bea4-9a6a2fea939b"
+    }
+  ]
+}
