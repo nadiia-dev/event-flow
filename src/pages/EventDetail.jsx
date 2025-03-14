@@ -1,19 +1,16 @@
-import { redirect, useRouteLoaderData } from "react-router-dom";
+import { Await, redirect, useRouteLoaderData } from "react-router-dom";
 import EventItem from "../components/EventItem";
+import { getAuthToken } from "../utils/auth";
+import { Suspense } from "react";
 
 function EventDetailPage() {
-  const { event, events } = useRouteLoaderData("event-detail");
+  const { event } = useRouteLoaderData("event-detail");
 
   return (
     <>
       <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
         <Await resolve={event}>
           {(loadedEvent) => <EventItem event={loadedEvent} />}
-        </Await>
-      </Suspense>
-      <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
-        <Await resolve={events}>
-          {(loadedEvents) => <EventItem event={loadedEvents} />}
         </Await>
       </Suspense>
     </>
@@ -64,9 +61,13 @@ export async function loader({ params }) {
 
 export async function action({ request, params }) {
   const id = params.eventId;
+  const token = getAuthToken();
 
   const resp = await fetch(`http://localhost:8080/events/${id}`, {
     method: request.method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!resp.ok) {
