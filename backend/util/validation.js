@@ -4,13 +4,18 @@ function isValidText(value) {
 
 function isValidDate(value) {
   const date = new Date(value);
-  return value && date !== 'Invalid Date';
+  return value && date !== "Invalid Date";
 }
 
 function isValidImageUrl(value) {
-  return value && value.startsWith('http');
+  return value && value.startsWith("http");
+}
+
+function isValidEmail(value) {
+  return value && value.includes("@");
 }
 
 exports.isValidText = isValidText;
 exports.isValidDate = isValidDate;
 exports.isValidImageUrl = isValidImageUrl;
+exports.isValidEmail = isValidEmail;
