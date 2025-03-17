@@ -3,6 +3,7 @@ import { getAll, get, add, replace, remove } from "../data/event.js";
 import { checkAuthMiddleware } from "../util/auth.js";
 import validate from "../util/validation.js";
 import { eventSchema } from "../schemas/eventSchema.js";
+import isValidId from "../util/isValidId.js";
 
 export const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", isValidId, async (req, res, next) => {
   try {
     const event = await get(req.params.id);
     res.json({ event: event });
@@ -46,18 +47,23 @@ router.post("/", validate(eventSchema), async (req, res, next) => {
   }
 });
 
-router.patch("/:id", validate(eventSchema), async (req, res, next) => {
-  const data = req.body;
+router.patch(
+  "/:id",
+  isValidId,
+  validate(eventSchema),
+  async (req, res, next) => {
+    const data = req.body;
 
-  try {
-    await replace(req.params.id, data);
-    res.json({ message: "Event updated.", event: data });
-  } catch (error) {
-    next(error);
+    try {
+      await replace(req.params.id, data);
+      res.json({ message: "Event updated.", event: data });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isValidId, async (req, res, next) => {
   try {
     await remove(req.params.id);
     res.json({ message: "Event deleted." });
