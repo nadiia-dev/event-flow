@@ -2,10 +2,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import EditEventPage from "./pages/EditEvent";
 import EventDetailPage, {
-  loader as eventDetailLoader,
+  // loader as eventDetailLoader,
   action as deleteEventAction,
 } from "./pages/EventDetail";
-import EventsPage, { loaderFunc } from "./pages/Events";
+import EventsPage, { loader as eventsLoader } from "./pages/Events";
 import EventsRootLayout from "./pages/EventsRoot";
 import HomePage from "./pages/Home";
 import NewEventPage from "./pages/NewEvent";
@@ -17,7 +17,8 @@ import AuthenticationPage, {
   action as authAction,
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
-import { tokenLoader, checkAuthLoader } from "./utils/auth";
+// import { tokenLoader, checkAuthLoader } from "./utils/auth";
+// import { queryClient } from "./utils/http.js";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <Error />,
     id: "root",
-    loader: tokenLoader,
+    // loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
       { path: "auth", element: <AuthenticationPage />, action: authAction },
@@ -36,11 +37,11 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
-            loader: loaderFunc,
+            loader: eventsLoader,
           },
           {
             path: ":eventId",
-            loader: eventDetailLoader,
+            // loader: eventDetailLoader,
             id: "event-detail",
             children: [
               {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditEventPage />,
                 action: eventAction,
-                loader: checkAuthLoader,
+                // loader: checkAuthLoader,
               },
             ],
           },
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
             path: "new",
             element: <NewEventPage />,
             action: eventAction,
-            loader: checkAuthLoader,
+            // loader: checkAuthLoader,
           },
         ],
       },
