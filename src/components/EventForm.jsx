@@ -8,11 +8,13 @@ import {
 import classes from "./EventForm.module.css";
 import { useMutation } from "@tanstack/react-query";
 import { saveEvent } from "../utils/http";
+import { useState } from "react";
 
 function EventForm() {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const eventData = useRouteLoaderData("event-detail");
+  const [formErrors, setFormErrors] = useState({});
 
   const mutation = useMutation({
     mutationFn: ({ eventData, method, eventId }) =>
@@ -21,7 +23,11 @@ function EventForm() {
       navigate("..");
     },
     onError: (error) => {
-      alert(error.message);
+      if (error.validationErrors) {
+        setFormErrors(error.validationErrors);
+      } else {
+        alert(error.message);
+      }
     },
   });
 
@@ -41,15 +47,12 @@ function EventForm() {
     mutation.mutate({ eventData, method, eventId });
   };
 
+  function cancelHandler() {
+    navigate("..");
+  }
+
   return (
     <Form onSubmit={handleSubmit} className={classes.form}>
-      {/* {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )} */}
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -59,6 +62,9 @@ function EventForm() {
           defaultValue={eventData ? eventData.title : ""}
           required
         />
+        {formErrors.title && (
+          <span className={classes.error}>{formErrors.title}</span>
+        )}
       </p>
       <p>
         <label htmlFor="image">Image</label>
@@ -69,6 +75,9 @@ function EventForm() {
           defaultValue={eventData ? eventData.image : ""}
           required
         />
+        {formErrors.image && (
+          <span className={classes.error}>{formErrors.image}</span>
+        )}
       </p>
       <p>
         <label htmlFor="date">Date</label>
@@ -79,6 +88,9 @@ function EventForm() {
           defaultValue={eventData ? eventData.date : ""}
           required
         />
+        {formErrors.date && (
+          <span className={classes.error}>{formErrors.date}</span>
+        )}
       </p>
       <p>
         <label htmlFor="description">Description</label>
@@ -89,9 +101,14 @@ function EventForm() {
           defaultValue={eventData ? eventData.description : ""}
           required
         />
+        {formErrors.description && (
+          <span className={classes.error}>{formErrors.description}</span>
+        )}
       </p>
       <div className={classes.actions}>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={cancelHandler}>
+          Cancel
+        </button>
         <button>Save</button>
       </div>
     </Form>

@@ -73,8 +73,12 @@ export async function saveEvent(eventData, method, eventId) {
     return response;
   }
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Response({ message: "Could not save event." }, { status: 500 });
+    const error = new Error(data.message || "Could not save event");
+    error.validationErrors = data.errors;
+    throw error;
   }
 }
 
