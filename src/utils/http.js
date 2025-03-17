@@ -5,11 +5,15 @@ export const queryClient = new QueryClient();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export async function fetchEvents({ signal, searchQuery }) {
+export async function fetchEvents({ signal, searchQuery, max }) {
   let url = `${apiUrl}/events`;
 
-  if (searchQuery) {
+  if (searchQuery && max) {
+    url = `${apiUrl}/events?search=${searchQuery}&max=${max}`;
+  } else if (searchQuery) {
     url = `${apiUrl}/events?search=${searchQuery}`;
+  } else if (max) {
+    url = `${apiUrl}/events?max=${max}`;
   }
 
   const response = await fetch(url, { signal: signal });

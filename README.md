@@ -55,7 +55,7 @@ JWT_SECRET=your-jwt-secret
 npm start
 ```
 
-The backend will now be running at http://localhost:5000.
+The backend will now be running at http://localhost:8080.
 
 ### Frontend Setup
 

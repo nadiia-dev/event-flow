@@ -8,8 +8,8 @@ import ErrorBlock from "../UI/ErrorBlock";
 
 function EventsPage() {
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     initialData: useLoaderData,
   });
 
