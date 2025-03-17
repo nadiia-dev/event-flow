@@ -7,7 +7,7 @@ import {
 
 import classes from "./EventForm.module.css";
 import { useMutation } from "@tanstack/react-query";
-import { saveEvent } from "../utils/http";
+import { queryClient, saveEvent } from "../utils/http";
 import { useState } from "react";
 
 function EventForm() {
@@ -20,6 +20,10 @@ function EventForm() {
     mutationFn: ({ eventData, method, eventId }) =>
       saveEvent(eventData, method, eventId),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["events"],
+        refetchType: "none",
+      });
       navigate("..");
     },
     onError: (error) => {
