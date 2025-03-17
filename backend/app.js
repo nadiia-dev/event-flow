@@ -10,13 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: "GET, POST, PATCH, DELETE",
-    allowedHeaders: "Content-Type, Authorization",
-  })
-);
+app.use(cors());
 
 app.use("/events", eventRoutes);
 app.use(authRoutes);
