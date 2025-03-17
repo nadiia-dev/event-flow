@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
+import { authenticate } from "../utils/http";
 
 function AuthenticationPage() {
   return <AuthForm />;
@@ -22,25 +23,7 @@ export async function action({ request }) {
     password: data.get("password"),
   };
 
-  const resp = await fetch(`http://localhost:8080/${mode}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(authData),
-  });
-
-  if (resp.status === 422 || resp.status === 401) {
-    return resp;
-  }
-
-  if (!resp.ok) {
-    throw new Response(
-      { message: "Could not authenticate user" },
-      { status: 500 }
-    );
-  }
-
-  const resData = await resp.json();
-  const token = resData.token;
+  const token = await authenticate(authData, mode);
 
   localStorage.setItem("token", token);
   const expiration = new Date();

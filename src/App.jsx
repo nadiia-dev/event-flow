@@ -17,8 +17,7 @@ import AuthenticationPage, {
   action as authAction,
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
-// import { tokenLoader, checkAuthLoader } from "./utils/auth";
-// import { queryClient } from "./utils/http.js";
+import { tokenLoader, checkAuthLoader } from "./utils/auth";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +25,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <Error />,
     id: "root",
-    // loader: tokenLoader,
+    loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
       { path: "auth", element: <AuthenticationPage />, action: authAction },
@@ -53,7 +52,7 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditEventPage />,
                 action: eventAction,
-                // loader: checkAuthLoader,
+                loader: checkAuthLoader,
               },
             ],
           },
