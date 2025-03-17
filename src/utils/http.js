@@ -3,11 +3,13 @@ import { getAuthToken } from "./auth";
 
 export const queryClient = new QueryClient();
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export async function fetchEvents({ signal, searchQuery }) {
-  let url = "http://localhost:8080/events";
+  let url = `${apiUrl}/events`;
 
   if (searchQuery) {
-    url = `http://localhost:8080/events?search=${searchQuery}`;
+    url = `${apiUrl}/events?search=${searchQuery}`;
   }
 
   const response = await fetch(url, { signal: signal });
@@ -23,7 +25,7 @@ export async function fetchEvents({ signal, searchQuery }) {
 }
 
 export async function authenticate(authData, mode) {
-  const resp = await fetch(`http://localhost:8080/${mode}`, {
+  const resp = await fetch(`${apiUrl}/${mode}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(authData),
@@ -45,7 +47,7 @@ export async function authenticate(authData, mode) {
 }
 
 export async function fetchEvent(id) {
-  const response = await fetch(`http://localhost:8080/events/${id}`);
+  const response = await fetch(`${apiUrl}/events/${id}`);
   if (!response.ok) {
     throw new Error("Could not fetch details for selected event.");
   }
@@ -56,9 +58,7 @@ export async function fetchEvent(id) {
 export async function saveEvent(eventData, method, eventId) {
   const token = getAuthToken();
   const url =
-    method === "PATCH"
-      ? `http://localhost:8080/events/${eventId}`
-      : `http://localhost:8080/events`;
+    method === "PATCH" ? `${apiUrl}/events/${eventId}` : `${apiUrl}/events`;
 
   const response = await fetch(url, {
     method: method,
@@ -83,7 +83,7 @@ export async function saveEvent(eventData, method, eventId) {
 }
 
 export async function deleteEvent(id, token) {
-  const response = await fetch(`http://localhost:8080/events/${id}`, {
+  const response = await fetch(`${apiUrl}/events/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });

@@ -8,10 +8,6 @@ const Modal = ({ children, onClose }) => {
   useEffect(() => {
     const modal = dialog.current;
     modal.showModal();
-
-    // return () => {
-    //   modal.close();
-    // };
   }, []);
 
   return createPortal(
