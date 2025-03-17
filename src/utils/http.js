@@ -36,3 +36,23 @@ export async function authenticate(authData, mode) {
   const resData = await resp.json();
   return resData.token;
 }
+
+export async function fetchEvent(id) {
+  const response = await fetch(`http://localhost:8080/events/${id}`);
+  if (!response.ok) {
+    throw new Error("Could not fetch details for selected event.");
+  }
+  const resData = await response.json();
+  return resData.event;
+}
+
+export async function deleteEvent(id, token) {
+  const response = await fetch(`http://localhost:8080/events/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete event.");
+  }
+  return id;
+}

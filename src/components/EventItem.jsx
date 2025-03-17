@@ -1,14 +1,28 @@
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./EventItem.module.css";
+import { getAuthToken } from "../utils/auth";
+import { useMutation } from "@tanstack/react-query";
+import { deleteEvent } from "../utils/http";
 
 function EventItem({ event }) {
-  const token = useRouteLoaderData("root");
-  const submit = useSubmit();
+  const token = getAuthToken();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (id) => deleteEvent(id, token),
+    onSuccess: () => {
+      navigate("/events");
+    },
+  });
+
+  const handleDelete = (eventId) => {
+    mutation.mutate(eventId);
+  };
 
   function startDeleteHandler() {
     const proceed = window.confirm("Are you sure?");
     if (proceed) {
-      submit(null, { method: "delete" });
+      handleDelete(event._id);
     }
   }
 
