@@ -1,8 +1,8 @@
-class NotFoundError {
+export default class NotFoundError extends Error {
   constructor(message) {
-    this.message = message;
+    super(message);
+    this.name = "NotFoundError";
     this.status = 404;
+    this.message = message || "Not found error";
   }
 }
-
-exports.NotFoundError = NotFoundError;

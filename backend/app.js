@@ -1,9 +1,10 @@
-const bodyParser = require("body-parser");
-const express = require("express");
+import bodyParser from "body-parser";
+import express from "express";
+import { router as eventRoutes } from "./routes/events.js";
+import { router as authRoutes } from "./routes/auth.js";
+import cors from "cors";
 
-const eventRoutes = require("./routes/events");
-const authRoutes = require("./routes/auth");
-const cors = require("cors");
+import "./db.js";
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // або твій порт фронтенду
+    origin: "http://localhost:5173",
     methods: "GET, POST, PATCH, DELETE",
     allowedHeaders: "Content-Type, Authorization",
   })
