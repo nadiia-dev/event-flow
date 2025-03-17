@@ -1,4 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
+import { getAuthToken } from "./auth";
 
 export const queryClient = new QueryClient();
 
@@ -44,6 +45,31 @@ export async function fetchEvent(id) {
   }
   const resData = await response.json();
   return resData.event;
+}
+
+export async function saveEvent(eventData, method, eventId) {
+  const token = getAuthToken();
+  const url =
+    method === "PATCH"
+      ? `http://localhost:8080/events/${eventId}`
+      : `http://localhost:8080/events`;
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(eventData),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+
+  if (!response.ok) {
+    throw new Response({ message: "Could not save event." }, { status: 500 });
+  }
 }
 
 export async function deleteEvent(id, token) {
