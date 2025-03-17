@@ -15,7 +15,4 @@ function isValidEmail(value) {
   return value && value.includes("@");
 }
 
-exports.isValidText = isValidText;
-exports.isValidDate = isValidDate;
-exports.isValidImageUrl = isValidImageUrl;
-exports.isValidEmail = isValidEmail;
+export { isValidText, isValidDate, isValidImageUrl, isValidEmail };

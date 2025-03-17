@@ -1,70 +1,39 @@
-const fs = require('node:fs/promises');
-
-const { v4: generateId } = require('uuid');
-
-const { NotFoundError } = require('../util/errors');
-
-async function readData() {
-  const data = await fs.readFile('events.json', 'utf8');
-  return JSON.parse(data);
-}
-
-async function writeData(data) {
-  await fs.writeFile('events.json', JSON.stringify(data));
-}
+import NotFoundError from "../util/errors.js";
+import event from "../models/event.js";
 
 async function getAll() {
-  const storedData = await readData();
-  if (!storedData.events) {
-    throw new NotFoundError('Could not find any events.');
+  const storedData = await event.find({});
+  if (!storedData) {
+    throw new NotFoundError("Could not find any events.");
   }
-  return storedData.events;
+  return storedData;
 }
 
 async function get(id) {
-  const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
-    throw new NotFoundError('Could not find any events.');
+  const storedData = await event.findById(id);
+  if (!storedData) {
+    throw new NotFoundError(`Could not find event for id ${id}`);
   }
-
-  const event = storedData.events.find((ev) => ev.id === id);
-  if (!event) {
-    throw new NotFoundError('Could not find event for id ' + id);
-  }
-
-  return event;
+  return storedData;
 }
 
 async function add(data) {
-  const storedData = await readData();
-  storedData.events.unshift({ ...data, id: generateId() });
-  await writeData(storedData);
+  const storedData = await event.create(data);
+  return storedData;
 }
 
 async function replace(id, data) {
-  const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
-    throw new NotFoundError('Could not find any events.');
+  const storedData = await event.findByIdAndUpdate(id, data, { new: true });
+  if (!storedData) {
+    throw new NotFoundError(`Could not find event for id ${id}`);
   }
 
-  const index = storedData.events.findIndex((ev) => ev.id === id);
-  if (index < 0) {
-    throw new NotFoundError('Could not find event for id ' + id);
-  }
-
-  storedData.events[index] = { ...data, id };
-
-  await writeData(storedData);
+  return storedData;
 }
 
 async function remove(id) {
-  const storedData = await readData();
-  const updatedData = storedData.events.filter((ev) => ev.id !== id);
-  await writeData({events: updatedData});
+  const storedData = await event.findByIdAndDelete(id);
+  return storedData;
 }
 
-exports.getAll = getAll;
-exports.get = get;
-exports.add = add;
-exports.replace = replace;
-exports.remove = remove;
+export { getAll, get, add, replace, remove };
