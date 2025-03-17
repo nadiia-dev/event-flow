@@ -1,18 +1,25 @@
-const express = require("express");
-
-const { getAll, get, add, replace, remove } = require("../data/event");
-const { checkAuth } = require("../util/auth");
-const {
+import express from "express";
+import { getAll, get, add, replace, remove } from "../data/event.js";
+import { checkAuthMiddleware } from "../util/auth.js";
+import {
   isValidText,
   isValidDate,
   isValidImageUrl,
-} = require("../util/validation");
+} from "../util/validation.js";
 
-const router = express.Router();
+export const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const events = await getAll();
+    const { search } = req.query;
+    let events = await getAll();
+    if (search) {
+      events = events.filter(
+        (event) =>
+          event.title.toLowerCase().includes(search.toLowerCase()) ||
+          event.description.toLowerCase().includes(search.toLowerCase())
+      );
+    }
     res.json({ events: events });
   } catch (error) {
     next(error);
@@ -28,7 +35,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.use(checkAuth);
+router.use(checkAuthMiddleware);
 
 router.post("/", async (req, res, next) => {
   console.log(req.token);
@@ -111,5 +118,3 @@ router.delete("/:id", async (req, res, next) => {
     next(error);
   }
 });
-
-module.exports = router;
