@@ -1,12 +1,86 @@
-# React + Vite
+# Event Flow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Event Flow is a web application designed to manage events. This app allows users to search and view detailed information about upcoming events. Also authenticated users can create? update and delete their own events.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Event Creation**: Create new events with details like title, date, and description.
+- **Event Dashboard**: View all upcoming events in a clean dashboard.
+- **User Authentication**: Secure sign-up and login functionality to manage your events.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React, React Router DOM, React Query, Vite, CSS
+- **Backend**: Node.js, Express, MongoDB, Mongoose
+- **Authentication**: JWT (JSON Web Token)
+- **Hosting**: Frontend on Vercel, Backend on Render
+- **Database**: MongoDB
+
+## Getting Started
+
+To get a local copy of the project up and running, follow these simple steps.
+
+### Prerequisites
+
+- Node.js
+- npm
+- MongoDB Atlas account (for the database)
+
+### Backend Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/nadiia-dev/event-flow.git
+cd event-flow/backend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a .env file in the backend directory and add the following:
+
+```env
+DB_URI=your-mongo-uri
+JWT_SECRET=your-jwt-secret
+```
+
+4. Run the backend locally:
+
+```bash
+npm start
+```
+
+The backend will now be running at http://localhost:5000.
+
+### Frontend Setup
+
+1. Navigate to the root folder:
+
+```bash
+cd ..
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a .env file in the root directory and add the following:
+
+```env
+VITE_API_URL=your-backend-url
+```
+
+4. Run the frontend locally:
+
+```bash
+npm run dev
+```
+
+The frontend will now be running at http://localhost:5173.
