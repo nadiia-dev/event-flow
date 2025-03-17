@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchEvents, queryClient } from "../utils/http";
 import FindEventSection from "../components/FindEventSection";
 import Loader from "../UI/Loader";
+import ErrorBlock from "../UI/ErrorBlock";
 
 function EventsPage() {
   const { isPending, isError, data, error } = useQuery({
@@ -17,7 +18,12 @@ function EventsPage() {
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>;
+    return (
+      <ErrorBlock
+        title="An error occured"
+        message={error.info?.message || "Error while fetching events"}
+      />
+    );
   }
 
   return (

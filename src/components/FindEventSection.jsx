@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../utils/http";
 import EventsList from "./EventsList";
 import Loader from "../UI/Loader";
+import ErrorBlock from "../UI/ErrorBlock";
 
 function FindEventSection() {
   const [searchQuery, setSearchQuery] = useState();
@@ -27,7 +28,12 @@ function FindEventSection() {
   }
 
   if (isError) {
-    content = <p>Error {error.info?.message}</p>;
+    content = (
+      <ErrorBlock
+        title="An error occured"
+        message={error.info?.message || "Error while fetching event"}
+      />
+    );
   }
 
   if (data) {
