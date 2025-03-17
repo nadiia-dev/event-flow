@@ -1,18 +1,14 @@
-function isValidText(value) {
-  return value && value.trim().length > 0;
-}
+const validate = (schema) => {
+  const func = (req, res, next) => {
+    const { error } = schema.validate(req.body, { abortEarly: false });
+    if (error) {
+      return res
+        .status(400)
+        .json({ errors: error.details.map((err) => err.message) });
+    }
+    next();
+  };
+  return func;
+};
 
-function isValidDate(value) {
-  const date = new Date(value);
-  return value && date !== "Invalid Date";
-}
-
-function isValidImageUrl(value) {
-  return value && value.startsWith("http");
-}
-
-function isValidEmail(value) {
-  return value && value.includes("@");
-}
-
-export { isValidText, isValidDate, isValidImageUrl, isValidEmail };
+export default validate;
