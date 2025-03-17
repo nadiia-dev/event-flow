@@ -1,14 +1,14 @@
-import { Await, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import EventsList from "../components/EventsList";
-import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents, queryClient } from "../utils/http";
+import FindEventSection from "../components/FindEventSection";
 
 function EventsPage() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
-    initialData: useLoaderData(),
+    initialData: useLoaderData,
   });
 
   if (isPending) {
@@ -20,11 +20,11 @@ function EventsPage() {
   }
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Await resolve={data.events}>
-        {(loadedEvents) => <EventsList events={loadedEvents} />}
-      </Await>
-    </Suspense>
+    <>
+      <FindEventSection />
+      <h1 className="heading">Recently added events</h1>
+      <EventsList events={data.events} />
+    </>
   );
 }
 

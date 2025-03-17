@@ -3,8 +3,14 @@ import { getAuthToken } from "./auth";
 
 export const queryClient = new QueryClient();
 
-export async function fetchEvents() {
-  const response = await fetch("http://localhost:8080/events");
+export async function fetchEvents({ signal, searchQuery }) {
+  let url = "http://localhost:8080/events";
+
+  if (searchQuery) {
+    url = `http://localhost:8080/events?search=${searchQuery}`;
+  }
+
+  const response = await fetch(url, { signal: signal });
 
   if (!response.ok) {
     throw new Response(JSON.stringify({ message: "Could not fetch events" }), {
