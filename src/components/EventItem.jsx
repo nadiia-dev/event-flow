@@ -3,6 +3,7 @@ import classes from "./EventItem.module.css";
 import { getAuthToken } from "../utils/auth";
 import { useMutation } from "@tanstack/react-query";
 import { deleteEvent } from "../utils/http";
+import { dateFormatter } from "../utils/dateFormetter";
 
 function EventItem({ event }) {
   const token = getAuthToken();
@@ -30,7 +31,7 @@ function EventItem({ event }) {
     <article className={classes.event}>
       <img src={event.image} alt={event.title} />
       <h1>{event.title}</h1>
-      <time>{event.date}</time>
+      <time>{dateFormatter(event.date)}</time>
       <p>{event.description}</p>
       {token && (
         <menu className={classes.actions}>
