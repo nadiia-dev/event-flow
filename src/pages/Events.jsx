@@ -3,6 +3,7 @@ import EventsList from "../components/EventsList";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents, queryClient } from "../utils/http";
 import FindEventSection from "../components/FindEventSection";
+import Loader from "../UI/Loader";
 
 function EventsPage() {
   const { isPending, isError, data, error } = useQuery({
@@ -12,7 +13,7 @@ function EventsPage() {
   });
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (isError) {

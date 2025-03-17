@@ -3,6 +3,7 @@ import classes from "./FindEventSection.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../utils/http";
 import EventsList from "./EventsList";
+import Loader from "../UI/Loader";
 
 function FindEventSection() {
   const [searchQuery, setSearchQuery] = useState();
@@ -22,7 +23,7 @@ function FindEventSection() {
   let content = <p>Please enter a search term and to find events.</p>;
 
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <Loader />;
   }
 
   if (isError) {
