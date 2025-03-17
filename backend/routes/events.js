@@ -9,7 +9,7 @@ export const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const { search } = req.query;
+    const { max, search } = req.query;
     let events = await getAll();
     if (search) {
       events = events.filter(
@@ -18,6 +18,11 @@ router.get("/", async (req, res, next) => {
           event.description.toLowerCase().includes(search.toLowerCase())
       );
     }
+
+    if (max) {
+      events = events.slice(events.length - max, events.length);
+    }
+
     res.json({ events: events });
   } catch (error) {
     next(error);
