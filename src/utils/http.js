@@ -87,8 +87,13 @@ export async function deleteEvent(id, token) {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
+
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to delete event.");
+    const error = new Error("Failed to delete event.");
+    error.info = data;
+    throw error;
   }
   return id;
 }

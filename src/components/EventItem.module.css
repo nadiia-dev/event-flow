@@ -30,3 +30,26 @@
   border: none;
   color: var(--color-primary-800);
 }
+
+.form_actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+}
+
+.button_text {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  border: none;
+  color: #ffd37c;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.button-text:hover {
+  color: #f6ad1b;
+}
