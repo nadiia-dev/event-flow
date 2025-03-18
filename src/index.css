@@ -51,4 +51,6 @@ ul {
 
 .heading {
   margin: 0 4rem;
+  line-height: 1.5;
+  text-align: center;
 }

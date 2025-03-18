@@ -1,13 +1,18 @@
 .content_section {
   margin: 0 auto 3rem auto;
   text-align: center;
-  padding: 0 15%;
 }
 
+@media (min-width: 768px) {
+  .content_section {
+    padding: 0 15%;
+  }
+}
 .content_section h2 {
   font-size: 2rem;
   margin: 2rem auto;
   color: #fff;
+  line-height: 1.5;
 }
 
 .search_form input,

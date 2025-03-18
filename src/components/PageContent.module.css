@@ -1,3 +1,6 @@
 .content {
   text-align: center;
 }
+.content h1 {
+  line-height: 1.5;
+}
