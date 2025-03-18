@@ -64,13 +64,14 @@ export async function saveEvent(eventData, method, eventId) {
   const url =
     method === "PATCH" ? `${apiUrl}/events/${eventId}` : `${apiUrl}/events`;
 
+  console.log(eventData);
+
   const response = await fetch(url, {
     method: method,
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(eventData),
+    body: eventData,
   });
 
   if (response.status === 422) {

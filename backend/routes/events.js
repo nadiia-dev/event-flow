@@ -4,6 +4,7 @@ import { checkAuthMiddleware } from "../util/auth.js";
 import validate from "../util/validation.js";
 import { eventSchema } from "../schemas/eventSchema.js";
 import isValidId from "../util/isValidId.js";
+import upload from "../util/upload.js";
 
 export const router = express.Router();
 
@@ -40,17 +41,38 @@ router.get("/:id", isValidId, async (req, res, next) => {
 
 router.use(checkAuthMiddleware);
 
-router.post("/", validate(eventSchema), async (req, res, next) => {
-  console.log(req.token);
-  const data = req.body;
+router.post(
+  "/",
+  // validate(eventSchema),
+  upload.single("image"),
+  async (req, res, next) => {
+    console.log(req.token);
 
-  try {
-    const savedData = await add(data);
-    res.status(201).json({ message: "Event saved.", event: savedData });
-  } catch (error) {
-    next(error);
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const { title, description, date, time } = req.body;
+    if (!title || !description || !date || !time) {
+      return res
+        .status(400)
+        .json({ message: "Title, description, date, and time are required" });
+    }
+
+    try {
+      const savedData = await add({
+        title,
+        description,
+        date,
+        time,
+        image: req.file,
+      });
+      res.status(201).json({ message: "Event saved.", event: savedData });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.patch(
   "/:id",

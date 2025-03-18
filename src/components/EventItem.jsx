@@ -8,6 +8,8 @@ import { useState } from "react";
 import Modal from "../UI/Modal";
 import ErrorBlock from "../UI/ErrorBlock";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function EventItem({ event }) {
   const token = getAuthToken();
   const navigate = useNavigate();
@@ -76,7 +78,7 @@ function EventItem({ event }) {
         </Modal>
       )}
       <article className={classes.event}>
-        <img src={event.image} alt={event.title} />
+        <img src={`${apiUrl}${event.image}`} alt={event.title} />
         <h1>{event.title}</h1>
         <time>
           {dateFormatter(event.date)} @ {event.time}

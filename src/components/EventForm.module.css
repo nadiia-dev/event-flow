@@ -53,3 +53,14 @@
   display: flex;
   gap: 2rem;
 }
+
+.image_container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+.image_container img {
+  width: 33%;
+  object-fit: cover;
+}

@@ -10,6 +10,8 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient, saveEvent } from "../utils/http";
 import { useState } from "react";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function EventForm() {
   const { eventId } = useParams();
   const navigate = useNavigate();
@@ -17,8 +19,7 @@ function EventForm() {
   const [formErrors, setFormErrors] = useState({});
 
   const mutation = useMutation({
-    mutationFn: ({ eventData, method, eventId }) =>
-      saveEvent(eventData, method, eventId),
+    mutationFn: ({ data, method, eventId }) => saveEvent(data, method, eventId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["events"],
@@ -39,17 +40,9 @@ function EventForm() {
     e.preventDefault();
     const data = new FormData(e.target);
 
-    const eventData = {
-      title: data.get("title"),
-      image: data.get("image"),
-      date: data.get("date"),
-      time: data.get("time"),
-      description: data.get("description"),
-    };
-
     const method = eventId ? "PATCH" : "POST";
 
-    mutation.mutate({ eventData, method, eventId });
+    mutation.mutate({ data, method, eventId });
   };
 
   function cancelHandler() {
@@ -57,7 +50,11 @@ function EventForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit} className={classes.form}>
+    <Form
+      onSubmit={(e) => handleSubmit(e)}
+      className={classes.form}
+      encType="multipart/form-data"
+    >
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -71,19 +68,13 @@ function EventForm() {
           <span className={classes.error}>{formErrors.title}</span>
         )}
       </p>
-      <p>
-        <label htmlFor="image">Image</label>
-        <input
-          id="image"
-          type="url"
-          name="image"
-          defaultValue={eventData ? eventData.image : ""}
-          required
-        />
+      <div className={classes.image_container}>
+        <img src={`${apiUrl}${eventData.image}`} alt={eventData.title} />
+        <input id="image" type="file" name="image" required />
         {formErrors.image && (
           <span className={classes.error}>{formErrors.image}</span>
         )}
-      </p>
+      </div>
       <div className={classes.controls}>
         <p>
           <label htmlFor="date">Date</label>
