@@ -69,7 +69,7 @@ function EventForm() {
         )}
       </p>
       <div className={classes.image_container}>
-        <img src={`${apiUrl}${eventData.image}`} alt={eventData.title} />
+        <img src={eventData.image} alt={eventData.title} />
         <input id="image" type="file" name="image" required />
         {formErrors.image && (
           <span className={classes.error}>{formErrors.image}</span>
