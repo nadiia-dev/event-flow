@@ -7,10 +7,11 @@ import Loader from "../UI/Loader";
 import ErrorBlock from "../UI/ErrorBlock";
 
 function EventsPage() {
+  const loaderData = useLoaderData();
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["events", { max: 3 }],
     queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
-    initialData: useLoaderData,
+    initialData: loaderData,
   });
 
   if (isPending) {

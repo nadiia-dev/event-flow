@@ -45,8 +45,8 @@ router.post("/", validate(eventSchema), async (req, res, next) => {
   const data = req.body;
 
   try {
-    await add(data);
-    res.status(201).json({ message: "Event saved.", event: data });
+    const savedData = await add(data);
+    res.status(201).json({ message: "Event saved.", event: savedData });
   } catch (error) {
     next(error);
   }

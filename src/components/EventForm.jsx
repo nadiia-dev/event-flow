@@ -43,6 +43,7 @@ function EventForm() {
       title: data.get("title"),
       image: data.get("image"),
       date: data.get("date"),
+      time: data.get("time"),
       description: data.get("description"),
     };
 
@@ -83,19 +84,33 @@ function EventForm() {
           <span className={classes.error}>{formErrors.image}</span>
         )}
       </p>
-      <p>
-        <label htmlFor="date">Date</label>
-        <input
-          id="date"
-          type="date"
-          name="date"
-          defaultValue={eventData ? eventData.date : ""}
-          required
-        />
-        {formErrors.date && (
-          <span className={classes.error}>{formErrors.date}</span>
-        )}
-      </p>
+      <div className={classes.controls}>
+        <p>
+          <label htmlFor="date">Date</label>
+          <input
+            id="date"
+            type="date"
+            name="date"
+            defaultValue={eventData ? eventData.date : ""}
+            required
+          />
+          {formErrors.date && (
+            <span className={classes.error}>{formErrors.date}</span>
+          )}
+        </p>
+        <p>
+          <label htmlFor="time">Time</label>
+          <input
+            type="time"
+            id="time"
+            name="time"
+            defaultValue={eventData ? eventData.time : ""}
+          />
+          {formErrors.date && (
+            <span className={classes.error}>{formErrors.time}</span>
+          )}
+        </p>
+      </div>
       <p>
         <label htmlFor="description">Description</label>
         <textarea

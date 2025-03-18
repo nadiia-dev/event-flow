@@ -36,7 +36,6 @@ function EventItem({ event }) {
     mutation.mutate(eventId);
   };
 
-  console.log("isDeleting:", isDeleting);
   return (
     <>
       {isDeleting && (
@@ -79,7 +78,9 @@ function EventItem({ event }) {
       <article className={classes.event}>
         <img src={event.image} alt={event.title} />
         <h1>{event.title}</h1>
-        <time>{dateFormatter(event.date)}</time>
+        <time>
+          {dateFormatter(event.date)} @ {event.time}
+        </time>
         <p>{event.description}</p>
         {token && (
           <menu className={classes.actions}>

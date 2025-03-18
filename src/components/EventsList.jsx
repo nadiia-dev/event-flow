@@ -12,7 +12,9 @@ function EventsList({ events }) {
               <img src={event.image} alt={event.title} />
               <div className={classes.content}>
                 <h2>{event.title}</h2>
-                <time>{dateFormatter(event.date)}</time>
+                <time>
+                  {dateFormatter(event.date)} @ {event.time}
+                </time>
               </div>
             </Link>
           </li>
