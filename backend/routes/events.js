@@ -43,8 +43,8 @@ router.use(checkAuthMiddleware);
 
 router.post(
   "/",
-  // validate(eventSchema),
   upload.single("image"),
+  validate(eventSchema),
   async (req, res, next) => {
     console.log(req.token);
 
@@ -77,12 +77,26 @@ router.post(
 router.patch(
   "/:id",
   isValidId,
+
+  upload.single("image"),
   validate(eventSchema),
   async (req, res, next) => {
     const data = req.body;
 
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const { title, description, date, time } = req.body;
+
     try {
-      await replace(req.params.id, data);
+      await replace(req.params.id, {
+        title,
+        description,
+        date,
+        time,
+        image: req.file,
+      });
       res.json({ message: "Event updated.", event: data });
     } catch (error) {
       next(error);

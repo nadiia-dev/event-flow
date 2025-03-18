@@ -1,8 +1,6 @@
-import { Jimp } from "jimp";
-import * as Path from "node:path";
-import fs from "fs";
 import NotFoundError from "../util/errors.js";
 import event from "../models/event.js";
+import normalizeImage from "../util/normalizeImage.js";
 
 async function getAll() {
   const storedData = await event.find({});
@@ -22,25 +20,21 @@ async function get(id) {
 
 async function add(data) {
   const { path } = data.image;
-  const correctedPath = path.replace(/\\/g, "/");
-  const image = await Jimp.read(correctedPath);
-
-  image.resize({ w: 200 });
-  const imageFilename = Date.now() + Path.extname(path);
-  await image.write(`public/images/${imageFilename}`);
-
-  fs.unlink(path, function (err) {
-    if (err) return console.log(err);
-    console.log("file deleted successfully");
-  });
-  const normalizedImage = `/images/${imageFilename}`;
+  const normalizedImage = await normalizeImage(path);
 
   const storedData = await event.create({ ...data, image: normalizedImage });
   return storedData;
 }
 
 async function replace(id, data) {
-  const storedData = await event.findByIdAndUpdate(id, data, { new: true });
+  const { path } = data.image;
+  const normalizedImage = await normalizeImage(path);
+  const storedData = await event.findByIdAndUpdate(
+    id,
+    { ...data, image: normalizedImage },
+    { new: true }
+  );
+
   if (!storedData) {
     throw new NotFoundError(`Could not find event for id ${id}`);
   }
