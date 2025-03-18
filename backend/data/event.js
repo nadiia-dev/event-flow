@@ -1,6 +1,6 @@
 import NotFoundError from "../util/errors.js";
 import event from "../models/event.js";
-import normalizeImage from "../util/normalizeImage.js";
+import getImageUrl from "../util/getImageUrl.js";
 
 async function getAll() {
   const storedData = await event.find({});
@@ -20,7 +20,7 @@ async function get(id) {
 
 async function add(data) {
   const { path } = data.image;
-  const normalizedImage = await normalizeImage(path);
+  const normalizedImage = await getImageUrl(path);
 
   const storedData = await event.create({ ...data, image: normalizedImage });
   return storedData;
@@ -28,7 +28,7 @@ async function add(data) {
 
 async function replace(id, data) {
   const { path } = data.image;
-  const normalizedImage = await normalizeImage(path);
+  const normalizedImage = await getImageUrl(path);
   const storedData = await event.findByIdAndUpdate(
     id,
     { ...data, image: normalizedImage },

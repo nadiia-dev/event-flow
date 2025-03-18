@@ -46,8 +46,6 @@ router.post(
   upload.single("image"),
   validate(eventSchema),
   async (req, res, next) => {
-    console.log(req.token);
-
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }

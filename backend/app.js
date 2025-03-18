@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
+import "dotenv/config";
 import { router as eventRoutes } from "./routes/events.js";
 import { router as authRoutes } from "./routes/auth.js";
 import cors from "cors";
