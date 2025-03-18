@@ -10,8 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient, saveEvent } from "../utils/http";
 import { useState } from "react";
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 function EventForm() {
   const { eventId } = useParams();
   const navigate = useNavigate();

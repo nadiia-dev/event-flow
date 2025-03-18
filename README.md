@@ -1,6 +1,6 @@
 # Event Flow
 
-Event Flow is a web application designed to manage events. This app allows users to search and view detailed information about upcoming events. Also authenticated users can create? update and delete their own events.
+Event Flow is a web application designed to manage events. This app allows users to search and view detailed information about upcoming events. Also authenticated users can create, update and delete their own events.
 
 ## Features
 
@@ -11,9 +11,11 @@ Event Flow is a web application designed to manage events. This app allows users
 
 ## Tech Stack
 
-- **Frontend**: React, React Router DOM, React Query, Vite, CSS
-- **Backend**: Node.js, Express, MongoDB, Mongoose
+- **Frontend**: React, React Router DOM, React Query, Vite
+- **Styling**: CSS modules
+- **Backend**: Node.js, Express, Mongoose
 - **Authentication**: JWT (JSON Web Token)
+- **File storage**: Cloudinary
 - **Hosting**: Frontend on Vercel, Backend on Render
 - **Database**: MongoDB
 
@@ -26,6 +28,7 @@ To get a local copy of the project up and running, follow these simple steps.
 - Node.js
 - npm
 - MongoDB Atlas account (for the database)
+- Cloudinary account (for image storage)
 
 ### Backend Setup
 
@@ -45,8 +48,11 @@ npm install
 3. Create a .env file in the backend directory and add the following:
 
 ```env
-DB_URI=your-mongo-uri
-JWT_SECRET=your-jwt-secret
+DB_URI=your mongodb uri
+JWT_SECRET=your jwt secret
+CLOUD_NAME=your cloudinary cloud name
+CLOUDINARY_API_KEY=your cloudinary api key
+CLOUDINARY_API_SECRET=your cloudinary api secret
 ```
 
 4. Run the backend locally:
@@ -74,7 +80,7 @@ npm install
 3. Create a .env file in the root directory and add the following:
 
 ```env
-VITE_API_URL=your-backend-url
+VITE_API_URL=your backend url
 ```
 
 4. Run the frontend locally:
