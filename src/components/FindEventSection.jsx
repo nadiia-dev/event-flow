@@ -23,9 +23,7 @@ function FindEventSection() {
 
   let content = <p>Please enter a search term and to find events.</p>;
 
-  if (isLoading) {
-    content = <Loader />;
-  }
+  if (isLoading) content = <Loader />;
 
   if (isError) {
     content = (
