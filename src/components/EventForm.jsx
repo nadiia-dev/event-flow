@@ -9,6 +9,7 @@ import classes from "./EventForm.module.css";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient, saveEvent } from "../utils/http";
 import { useState } from "react";
+import ImagePicker from "./ImagePicker";
 
 function EventForm() {
   const { eventId } = useParams();
@@ -67,8 +68,11 @@ function EventForm() {
         )}
       </p>
       <div className={classes.image_container}>
-        <img src={eventData.image} alt={eventData.title} />
-        <input id="image" type="file" name="image" required />
+        <ImagePicker
+          label="Pick an image"
+          name="image"
+          image={eventData && eventData.image}
+        />
         {formErrors.image && (
           <span className={classes.error}>{formErrors.image}</span>
         )}
